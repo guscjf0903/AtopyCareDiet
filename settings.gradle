@@ -1,0 +1,5 @@
+rootProject.name = 'AtopyCareDiet'
+include 'API'
+include 'Core'
+include 'UI'
+
