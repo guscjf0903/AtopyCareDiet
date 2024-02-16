@@ -1,0 +1,23 @@
+server:
+  port: 7777
+---
+spring:
+  devtools:
+    livereload:
+      enabled: false
+  jpa:
+    properties:
+      hibernate:
+    open-in-view: false
+
+  profiles:
+    group:
+      dev:
+        - db-dev
+        - openinview-dev
+      prod:
+        - db-prod
+        - openinview-prod
+    include:
+      - db
+

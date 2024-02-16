@@ -1,0 +1,13 @@
+body {
+    background-color: rgba(160, 179, 176, 0.25); /* 바깥쪽 배경색 (연한 회색) */
+}
+.outer-container {
+    background-color: #d7e0e8; /* 안쪽 바탕색 (연한 회색) */
+    padding: 20px;
+    border-radius: 10px;
+}
+.inner-container {
+    background-color: #179b77;
+    padding: 20px;
+    border-radius: 10px;
+}
