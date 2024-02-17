@@ -8,8 +8,8 @@ import org.api.entity.MenuEntity;
 import org.api.entity.UserEntity;
 import org.api.repository.MealRepository;
 import org.api.repository.MenuRepository;
-import org.core.dto.PostDto;
-import org.core.dto.PostDto.MenuDTO;
+import org.core.dto.MenuPostDto;
+import org.core.dto.MenuPostDto.MenuDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostMenuService {
     private final MealRepository mealRepository;
     private final MenuRepository menuRepository;
-    private final LoginService  loginService;
+    private final LoginService loginService;
 
     @Transactional
-    public Long postMenu(PostDto postMenuDto) {
-        UserEntity userEntity = getUserDate(postMenuDto);
+    public Date postMenu(MenuPostDto postMenuDto) {
+        UserEntity userEntity = getUserData(postMenuDto);
 
         return DuplicateAndSaveMealDate(userEntity, postMenuDto);
     }
 
-    private Long DuplicateAndSaveMealDate(UserEntity userEntity, PostDto postMenuDto) { //meal 테이블에 겹치는 날짜의 menu데이터 확인
+    private Date DuplicateAndSaveMealDate(UserEntity userEntity, MenuPostDto postMenuDto) { //meal 테이블에 겹치는 날짜의 menu데이터 확인
         Date menuDate = postMenuDto.getMenuDate();
         MealEntity savedMeal;
         if(!mealRepository.existsByMealDate(menuDate)) {
@@ -38,17 +38,17 @@ public class PostMenuService {
         }
         saveMenus(savedMeal, postMenuDto);
 
-        return savedMeal.getMealId();
+        return savedMeal.getMealDate();
     }
 
-    private void saveMenus(MealEntity mealEntity, PostDto postMenuDto) {
+    private void saveMenus(MealEntity mealEntity, MenuPostDto postMenuDto) {
         for(MenuDTO menu :postMenuDto.getMenuList()) {
             menuRepository.save(MenuEntity.of(mealEntity, menu.getMenuName(),
                     menu.getMenuAmount(), postMenuDto.getMenuTime(), postMenuDto.getRemark()));
         }
     }
 
-    private UserEntity getUserDate(PostDto postMenuDto) {
+    private UserEntity getUserData(MenuPostDto postMenuDto) {
         LoginEntity loginEntity = loginService.validateLoginId(postMenuDto.getLoginToken());
 
         return loginEntity.getUser();

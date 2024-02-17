@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto {
+public class MenuPostDto {
     private Date menuDate;
     private LocalTime menuTime;
     private String remark;

@@ -46,7 +46,7 @@ function sendPostMenuData() {
     };
 
     // Send the data to the server using fetch
-    fetch('/menu/new', {
+    fetch('/new-post/menu', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function sendPostMenuData() {
                 alert('주문이 성공적으로 완료되었습니다.');
                 response.json().then(data => {
                     console.log(data);
-                    window.location.href = '/menu/'+data.postId;
+                    window.location.href = '/get-post/'+data.postDate;
                 });
             } else {
                 // Order was not created
@@ -71,5 +71,35 @@ function sendPostMenuData() {
         });
 
     // Prevent the default form submission
+    return false;
+}
+
+function sendDiseaseData() {
+    // Collect order data from all menu and quantity fields
+    var diseaseDate = $("#diseaseDate").val();
+    var diseaseStep = $("#diseaseStep").val();
+    var diseaseRemark = $("#DiseaseRemark").val();
+
+    var data = {
+        diseaseDate: diseaseDate,
+        diseaseStep: diseaseStep,
+        diseaseRemark: diseaseRemark,
+        loginToken: parseInt(document.getElementsByClassName('loginToken').value)
+    };
+    $.ajax({
+        url: "/new-post/disease",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response);
+            alert("질병기록이 성공적으로 추가되었습니다.");
+            window.location.href = '/get-post/' + response.postDate;
+        },
+        error: function (error) {
+            alert("질병기록 추가에 실패하였습니다.");
+            console.log(error);
+        }
+    })
     return false;
 }

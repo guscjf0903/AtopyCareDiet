@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- jQuery 및 부트스트랩 스크립트 추가 -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- send_loginToken.js 및 send_PostMenu.js 스크립트 추가 -->
-<script src="/send_loginToken.js"></script>
-<script src="/send_PostMenu.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#done').click(function(event) {
-            event.preventDefault();
-            sendOrder();
-        });
-    });
-</script>
 </body>
 </html>
 <!DOCTYPE html>
@@ -41,6 +24,8 @@
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
+        <input type="hidden" id="loginToken" name="loginToken">
+
         <div class="tab-pane fade show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
             <form id="menuPostForm" onsubmit="return sendPostMenuData()">
                 <div class="form-group">
@@ -56,8 +41,6 @@
                     <label for="menuTime">음식을 먹은 시간은 언제인가요?</label>
                     <input type="time" class="form-control" id="menuTime" required>
                 </div>
-
-                <input type="hidden" class="loginToken" name="loginToken">
 
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" onclick="addMenuField()">메뉴 추가</button>
@@ -87,7 +70,6 @@
                     <input type="number" class="form-control" id="diseaseStep" min="1" max="10" required>
                 </div>
 
-                <input type="hidden" class="loginToken" name="loginToken">
 
                 <div class="form-group">
                     <label for="remark">특이사항을 입력해주세요!</label>
@@ -101,9 +83,13 @@
 </div>
 
 
-<!-- send_loginToken.js 및 send_PostMenu.js 스크립트 추가 -->
 <script src="/send_loginToken.js"></script>
-<script src="/send_PostMenu.js"></script>
+<script src="/send_PostMenuAndDisease.js"></script>
+
+<!-- jQuery 및 부트스트랩 스크립트 추가 -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -119,6 +105,7 @@
             sendDiseaseData();
         });
     });
+
 </script>
 </body>
 </html>

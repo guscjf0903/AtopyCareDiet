@@ -2,12 +2,12 @@ package org.ui.controller;
 
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.core.dto.PostDto;
+import org.core.dto.DiseasePostDto;
+import org.core.dto.MenuPostDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,33 +15,48 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/menu")
+@RequestMapping("/new-post")
 public class PostController {
-    @GetMapping("/new")
+    @GetMapping("/menu")
     public String showPostMenuForm() {
-        return "postMenu";
+        return "postMenuAndDisease";
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<Map> postMenu(@RequestBody PostDto postMenuDto, @Value("${api.url}") String url) {
+    @PostMapping("/menu")
+    public ResponseEntity<Map> postMenu(@RequestBody MenuPostDto postMenuDto, @Value("${api.url}") String url) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> postMenuStatus = restTemplate.postForEntity(url + "/menu/new", postMenuDto, Map.class);
+        ResponseEntity<Map> postMenuStatus = restTemplate.postForEntity(url + "/new-post/menu", postMenuDto, Map.class);
 
         return postMenuStatus;
     }
 
-    @GetMapping("/{postId}")
-    public String showMenuDetailForm() {
-        return "menuDetail";
+    @GetMapping("/disease")
+    public String showPostDiseaseForm() {
+        return "postMenuAndDisease";
     }
 
-    @PostMapping("/{postId}")
-    public ResponseEntity<String> getMenu(@PathVariable Long postId, @Value("${api.url}") String url) {
+    @PostMapping("/disease")
+    public ResponseEntity<Map> postDisease(@RequestBody DiseasePostDto postDiseaseDto, @Value("${api.url}") String url) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> getMenuDetail = restTemplate.getForEntity(url + "/menu/" + postId, String.class);
+        ResponseEntity<Map> postDiseaseStatus = restTemplate.postForEntity(url + "/new-post/disease", postDiseaseDto, Map.class);
 
-        return getMenuDetail;
+        return postDiseaseStatus;
     }
+
+
+
+//    @GetMapping("/{postId}")
+//    public String showMenuDetailForm() {
+//        return "menuDetail";
+//    }
+//
+//    @PostMapping("/{postId}")
+//    public ResponseEntity<String> getMenu(@PathVariable Long postId, @Value("${api.url}") String url) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<String> getMenuDetail = restTemplate.getForEntity(url + "/menu/" + postId, String.class);
+//
+//        return getMenuDetail;
+//    }
 
 
 }
